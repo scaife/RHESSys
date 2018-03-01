@@ -218,7 +218,14 @@ void	canopy_stratum_daily_I(
 			+ cs->live_crootc + cs->livecrootc_store + cs->livecrootc_transfer
 			+ cs->dead_crootc + cs->deadcrootc_store + cs->deadcrootc_transfer);
 
-	
+
+		daily_mortality = stratum[0].defaults[0][0].epc.min_daily_mortality;
+
+		/* Increase in background mortality following self thinning after a set number of years */
+		if (cs->age > stratum[0].defaults[0][0].epc.daily_mortality_threshold) 
+			daily_mortality = stratum[0].defaults[0][0].epc.max_daily_mortality;
+
+/*	
 		daily_mortality = stratum[0].defaults[0][0].epc.max_daily_mortality;
 
 		if (cs->age > stratum[0].defaults[0][0].epc.daily_mortality_threshold) 
@@ -226,6 +233,7 @@ void	canopy_stratum_daily_I(
 				(cs->age-stratum[0].defaults[0][0].epc.daily_mortality_threshold)/100.0);
 
 		daily_mortality = max(daily_mortality, stratum[0].defaults[0][0].epc.min_daily_mortality);
+*/
 
 		mort.mort_cpool = daily_mortality;
 		mort.mort_leafc = daily_mortality;
