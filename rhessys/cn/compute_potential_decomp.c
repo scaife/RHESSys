@@ -45,6 +45,7 @@ int compute_potential_decomp(double tsoil, double maxpsi,
 							 double minpsi,
 							 double theta,
 							 double std,
+							 double age,
 							 struct  soil_c_object   *cs_soil,
 							 struct  soil_n_object   *ns_soil,
 							 struct  litter_c_object *cs_litr,
@@ -60,7 +61,7 @@ int compute_potential_decomp(double tsoil, double maxpsi,
 	/*	Local Variable Definition. 							*/
 	/*------------------------------------------------------*/
 	int ok;
-	double rate_scalar, t_scalar, w_scalar;
+	double rate_scalar, t_scalar, w_scalar, a_scalar;
 	double a,b,c,d;
 	double tk, thetai;
 	double rfl1s1, rfl2s2,rfl4s3,rfs1s2,rfs2s3,rfs3s4;
@@ -125,8 +126,21 @@ int compute_potential_decomp(double tsoil, double maxpsi,
 		w_scalar = sqrt(w_scalar);
 	else
 		w_scalar = ZERO;
+	
+	if (age > 2479212){  /* Oct 1, 2075 */
+		a_scalar = .7;
+		ns_soil->sminn = ns_soil->sminn * 1.43;
+	}
+	else if (age > 2472637){ /* Oct 1, 2057 */
+		a_scalar = .4;
+		ns_soil->sminn = ns_soil->sminn * 1.5;
+	}
+	else {
+		a_scalar = 1;
+	}
 
-	rate_scalar = w_scalar * t_scalar;
+
+	rate_scalar = w_scalar * t_scalar * a_scalar;
 	/* assign output variables */
 	cs_litr->t_scalar = t_scalar;
 	cs_litr->w_scalar = w_scalar;
