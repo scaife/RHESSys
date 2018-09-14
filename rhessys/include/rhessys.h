@@ -515,6 +515,7 @@ struct basin_object
         int             ID;                                                                     
         int             num_base_stations;
         int             num_hillslopes;
+	int		basin_parm_ID;
         double  area;                   /*  m2          */
 	      double  area_withsnow;			/*  m2 		*/
         double  x;                      /*  meters      */      
@@ -805,6 +806,7 @@ struct hillslope_object
         int             ID;
         int             num_base_stations;
         int             num_zones;
+	int		hill_parm_ID;
         double  x;                      /*      meters  */
         double  y;                      /*      meters  */
         double  z;                      /* meters       */
@@ -944,6 +946,7 @@ struct zone_object
         int             Kdown_direct_flag;                  /*  0 or 1  */
         int             num_base_stations;                              
         int             num_patches;
+	int		zone_parm_ID;
         double  x;                                      /* meters       */
         double  y;                                      /* meters       */
         double  z;                                      /* meters       */
@@ -1539,6 +1542,10 @@ struct patch_object
         int             num_layers;
         int             num_soil_intervals;                             /* unitless */
         int             target_status;
+	int		soil_parm_ID;
+	int		landuse_parm_ID;
+	double		mpar;
+	//int				wuiID;
         double  x;                                                                      /* meters       */
         double  y;                                                                      /* meters       */
         double  z;                                                                      /* meters       */
@@ -1665,8 +1672,8 @@ struct patch_object
         double  grazing_Closs;          /* kgC/m2       */
         double  grazing_mean_nc;        /* ratio N:Co   */
         double  fertilizer_NO3_in;         /* kg/m2        */
-        double  fertilizer_NH4_in;         /* kg/m2        */
-        double  fertilizer_NO3;         /* kg/m2        */
+	double  fertilizer_NH4_in;         /* kg/m2        */
+	double  fertilizer_NO3;         /* kg/m2        */
         double  fertilizer_NH4;         /* kg/m2        */
         double  surface_DOC_Qin_total;  /* kgC/m2 day   */
         double  surface_DOC_Qout_total; /* kgC/m2 day   */
@@ -2026,6 +2033,8 @@ struct  command_line_object
         char    world_header_filename[FILEPATH_LEN];
         char    tec_filename[FILEPATH_LEN];
         char    vegspinup_filename[FILEPATH_LEN];
+		char 	firegrid_patch_filename[FILEPATH_LEN]; // MCK: add path to patch and dem grid files
+		char 	firegrid_dem_filename[FILEPATH_LEN]; // MCK: add path to patch and dem grid files
         double  tmp_value;
         double  cpool_mort_fract;
         double  veg_sen1;
@@ -2691,6 +2700,8 @@ struct  stratum_default
        struct target_object { 
               double lai;
               double total_stemc;
+	      double height;
+              double age;
               int    met;
        };
 /*----------------------------------------------------------*/
@@ -2714,7 +2725,8 @@ struct  canopy_strata_object
         {
         int             patch_ID;
         int             ID;
-        int             num_base_stations;                              
+        int             num_base_stations;     
+	int		veg_parm_ID;
         double  APAR_direct;                                    /* (umol photon/m2*day) */
         double  APAR_diffuse;                                   /* */
         double  cover_fraction;
@@ -2805,6 +2817,7 @@ struct patch_fire_object
 	double occupied_area; /*gives the total patch area in the current grid	*/
 	struct fire_default_object *defaults;
 	double elev; // elevation if read in from grid
+	int wui_flag; // a flag, 1 if pixel within wui buffer, 0 otherwise
 };	
 
 /*----------------------------------------------------------*/
