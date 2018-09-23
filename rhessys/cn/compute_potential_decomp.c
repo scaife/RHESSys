@@ -126,13 +126,15 @@ int compute_potential_decomp(double tsoil, double maxpsi,
 		w_scalar = sqrt(w_scalar);
 	else
 		w_scalar = ZERO;
+
 	
-	if (age > 2479212){  /* Oct 1, 2075 */
-		a_scalar = .7;
+	/* Code for reducing litter decomposition rate during self-thinning phase*/
+	if (age > 2462045){ /* Oct 1, 2028 */
+		a_scalar = 0.7;
 		ns_soil->sminn = ns_soil->sminn * 1.43;
 	}
-	else if (age > 2472637){ /* Oct 1, 2057 */
-		a_scalar = .4;
+	else if (age > 2458027){ /* Oct 1, 2017 */
+		a_scalar = 0.4;
 		ns_soil->sminn = ns_soil->sminn * 1.5;
 	}
 	else {
