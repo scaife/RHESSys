@@ -207,9 +207,9 @@ struct hillslope_object *construct_hillslope(
 	hillslope[0].aggdefs.NH4_adsorption_rate = 0.0;
 	hillslope[0].aggdefs.DON_adsorption_rate = 0.0;
 	hillslope[0].aggdefs.DOC_adsorption_rate = 0.0;
+
 	
 	for ( i=0 ; i<hillslope[0].num_zones ; i++ ){
-		printf("\n Construction zone %d", i);
 		hillslope[0].zones[i] = construct_zone( command_line,
 			world_file,
 			num_world_base_stations,
@@ -307,7 +307,7 @@ struct hillslope_object *construct_hillslope(
 	hillslope[0].acc_year.stream_NO3 = 0.0;
 	hillslope[0].acc_year.stream_NH4 = 0.0;
 	hillslope[0].acc_year.psn = 0.0;
-	
+
 	if(paramPtr!=NULL)
 	  free(paramPtr);
 
